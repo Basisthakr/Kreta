@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.basisttha.Kreta.Model.RevokedToken;
-import com.basisttha.Kreta.Model.User;
+import com.basisttha.Kreta.Model.Users;
 import com.basisttha.Kreta.Repository.RevokedTokenRepository;
 import com.basisttha.Kreta.Repository.UserRepository;
 import com.basisttha.Kreta.Service.JwtService;
@@ -59,7 +59,7 @@ public class JwtFilter extends OncePerRequestFilter{
             //check if user Id exists in repository
             String userId = jwtService.extractUserId(token);
             if(userId!=null){
-                Optional<User> user = userRepository.findById(UUID.fromString(userId));
+                Optional<Users> user = userRepository.findById(UUID.fromString(userId));
                 if(user.isPresent()){
                     List<SimpleGrantedAuthority> authorities = List.of(
                     new SimpleGrantedAuthority("ROLE_" + user.get().getRole().name())

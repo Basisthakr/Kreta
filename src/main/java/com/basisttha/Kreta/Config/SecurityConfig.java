@@ -1,5 +1,7 @@
 package com.basisttha.Kreta.Config;
 
+import java.util.List;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -9,12 +11,16 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.basisttha.Kreta.Repository.UserRepository;
 
@@ -22,11 +28,11 @@ import com.basisttha.Kreta.Repository.UserRepository;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private final JwtFilter jwtAuthFilter;
+    private final JwtFilter jwtFilter;
     private final UserRepository userRepository;
 
-    public SecurityConfig(JwtFilter jwtAuthFilter, UserRepository userRepository) {
-        this.jwtAuthFilter = jwtAuthFilter;
+    public SecurityConfig(JwtFilter jwtFilter, UserRepository userRepository) {
+        this.jwtFilter = jwtFilter;
         this.userRepository = userRepository;
     }
 
@@ -38,7 +44,7 @@ public class SecurityConfig {
     @Bean
     public UserDetailsService userDetailsService() {
         return email -> userRepository.findByEmail(email)
-                .map(user -> org.springframework.security.core.userdetails.User
+                .map(user -> User//core userDetailsUser
                         .withUsername(user.getEmail())
                         .password(user.getPasswordHash())
                         .roles(user.getRole().name())
@@ -62,15 +68,26 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .csrf(csrf -> csrf.disable())
+            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/auth/**").permitAll()
-                .requestMatchers("/webhooks/**").permitAll()
+                .requestMatchers("/api/auth/**", "/webhooks/**").permitAll()
                 .anyRequest().authenticated()
             )
             .authenticationProvider(authenticationProvider())
-            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
+    }
+
+    public CorsConfigurationSource corsConfigurationSource(){
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowedOrigins(List.of("https://basistth.dev","https://status.basistth.dev"));
+        config.setAllowCredentials(true);
+        config.setAllowedMethods(List.of("GET","PUT","POST","DELETE","OPTIONS"));
+        config.setAllowedHeaders(List.of("*"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+        return source;
     }
 }
