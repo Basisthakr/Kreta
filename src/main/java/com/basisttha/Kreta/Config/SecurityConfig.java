@@ -22,16 +22,16 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import com.basisttha.Kreta.Repository.UserRepository;
+import com.basisttha.Kreta.Repository.UsersRepository;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
     private final JwtFilter jwtFilter;
-    private final UserRepository userRepository;
+    private final UsersRepository userRepository;
 
-    public SecurityConfig(JwtFilter jwtFilter, UserRepository userRepository) {
+    public SecurityConfig(JwtFilter jwtFilter, UsersRepository userRepository) {
         this.jwtFilter = jwtFilter;
         this.userRepository = userRepository;
     }

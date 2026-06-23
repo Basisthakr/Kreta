@@ -15,7 +15,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import com.basisttha.Kreta.Model.RevokedToken;
 import com.basisttha.Kreta.Model.Users;
 import com.basisttha.Kreta.Repository.RevokedTokenRepository;
-import com.basisttha.Kreta.Repository.UserRepository;
+import com.basisttha.Kreta.Repository.UsersRepository;
 import com.basisttha.Kreta.Service.JwtService;
 
 import jakarta.servlet.FilterChain;
@@ -29,7 +29,7 @@ import lombok.RequiredArgsConstructor;
 public class JwtFilter extends OncePerRequestFilter{
 
     private final JwtService jwtService;
-    private final UserRepository userRepository;
+    private final UsersRepository userRepository;
     private final RevokedTokenRepository revokedTokenRepository;
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)

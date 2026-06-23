@@ -27,7 +27,7 @@ public class ApiKey {
     private UUID keyId;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ApiKey_User")
-    private User user;
+    private Users user;
     private String keyHash; //Api key hash, SHA-256 as it is faster than Bcrypt
     private String prefix;//first 10 chars of the API key, stored in plaintext, for user to verify 
     private Boolean isActive;//if false, means revoked
