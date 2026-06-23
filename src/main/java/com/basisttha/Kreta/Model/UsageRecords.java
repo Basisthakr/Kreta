@@ -26,7 +26,7 @@ public class UsageRecords {//this table is for couting usage of APIs
     private UUID recordId;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId_usageRecord")
-    private User user;
+    private Users user;
     private LocalDateTime periodStart;
     private LocalDateTime periodEnd;
     private Long callCount;//api call count

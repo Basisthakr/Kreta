@@ -23,7 +23,7 @@ public class Invoice {
     private String stripeInvoiceId;//unique, not null, provided by Stripe, why not UUID?
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId_invoice")
-    private User user;
+    private Users user;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "invoice_for_subscription_id")
     private Subscription subscription;

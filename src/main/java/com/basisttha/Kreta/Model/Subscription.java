@@ -30,7 +30,7 @@ public class Subscription {
     private UUID subscriptionId;
     @OneToOne(fetch =FetchType.LAZY)
     @JoinColumn(name = "subscription_userId", nullable = false)
-    private User user;
+    private Users user;
     @ManyToOne
     @JoinColumn(name = "subscription_planId", nullable = false)
     private Plan plan;//nullable = false as free plan will have an entry in subscriptions as FREE

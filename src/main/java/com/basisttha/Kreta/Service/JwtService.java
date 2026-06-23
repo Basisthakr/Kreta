@@ -5,7 +5,7 @@ import java.util.function.Function;
 import javax.crypto.SecretKey;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import com.basisttha.Kreta.Model.User;
+import com.basisttha.Kreta.Model.Users;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
@@ -21,7 +21,7 @@ public class JwtService {
     @Value("${jwt.expiry-hours}")
     private int jwtExpiryHours;
 
-    public String generateToken(User user) {
+    public String generateToken(Users user) {
         return Jwts.builder()
                 .subject(user.getUserId().toString())
                 .claim("email", user.getEmail())
