@@ -2,12 +2,13 @@ package com.basisttha.Kreta.Model;
 
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.PrePersist;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -33,10 +34,6 @@ public class Invoice {
     private LocalDateTime dueDate;
     private LocalDateTime paidAt;
     private String hostedInvoiceUrl;//stripe gives a link for URL
+    @CreationTimestamp
     private LocalDateTime createdAt;
-
-    @PrePersist
-    void setStuff(){
-        this.createdAt = LocalDateTime.now();
-    }
 }

@@ -3,6 +3,9 @@ package com.basisttha.Kreta.Model;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -12,7 +15,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
-import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -43,16 +45,8 @@ public class Subscription {
     private Boolean cancelAtPeriodEnd;//stripe sends in webhook
     private LocalDateTime gracePeriodExpiresAt;//grace period 3 days from the time the bill was due
     private Boolean accessSuspended;//if grace period ended and payment didnt go through, local field
+    @CreationTimestamp
     private LocalDateTime createdAt;
+    @UpdateTimestamp//could also use @PreUpdate
     private LocalDateTime updatedAt;//when a subscription changes
-
-    @PrePersist
-    void setStuff(){
-        this.createdAt = LocalDateTime.now();
-    }
-
-    @PreUpdate
-    void updateStuff(){
-        this.updatedAt = LocalDateTime.now();
-    }
 }
