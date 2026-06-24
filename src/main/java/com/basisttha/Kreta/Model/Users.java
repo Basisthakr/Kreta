@@ -3,6 +3,8 @@ package com.basisttha.Kreta.Model;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -10,7 +12,6 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -36,10 +37,6 @@ public class Users {
     private String stripeCustomerId;//every stripe call Kreta makes on behalf of this user uses this
     @Enumerated(EnumType.STRING)
     private Role role;
+    @CreationTimestamp
     private LocalDateTime createdAt;
-
-    @PrePersist
-    void setStuff(){
-        this.createdAt = LocalDateTime.now();
-    }
 }
