@@ -1,0 +1,29 @@
+spring.application.name=Kreta
+
+spring.datasource.url=jdbc:postgresql://localhost:5432/Kreta
+spring.datasource.username=postgres
+spring.datasource.password=PUT_PASSWORD_HERE
+spring.datasource.driver-class-name=org.postgresql.Driver
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+
+spring.jpa.show-sql=true
+
+UPSTASH_REDIS_REST_URL="LINK_HERE"
+UPSTASH_REDIS_REST_TOKEN="PASTE TOKEN THAT UPSTASH GIVES YOU"
+
+stripe.secret-key = PASTE STRIPE SECRET KEY
+stripe.webhook-secret = PASTE STRIPE WEBHOOK TOKEN
+
+jwt.secret-key = PASTE_BASE64_ENCODED_JWT
+jwt.expiry-hours= 1
+
+stripe.price.bronze.monthly=price_XXXX
+stripe.price.bronze.yearly=price_XXXX
+stripe.price.bronze.metered=price_XXXX
+stripe.price.silver.monthly=price_XXXX
+stripe.price.silver.yearly=price_XXXX
+stripe.price.silver.metered=price_XXXX
+stripe.price.gold.monthly=price_XXXX
+stripe.price.gold.yearly=price_XXXX
+stripe.price.gold.metered=price_XXXX
